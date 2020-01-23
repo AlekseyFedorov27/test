@@ -1,4 +1,4 @@
-# budget-app
+# test-app
 
 ## Project setup
 ```
