@@ -53,51 +53,53 @@
 
 <script>
 import { mapGetters } from "vuex";
-import {eventBus} from '../main'
+import { eventBus } from "../main";
 export default {
   data() {
     return {
-      category: '',
-      brand:'',
-      payload:'',
+      category: "",
+      brand: "",
+      payload: "",
       listLength: null
     };
   },
-  created(){
-    eventBus.$on('setFilter', payload=>{
-      this.brand=payload.brand
-      this.category=payload.category
-    })
+  created() {
+    eventBus.$on("setFilter", payload => {
+      this.brand = payload.brand;
+      this.category = payload.category;
+    });
   },
-  mounted(){
+  mounted() {
     this.getLengthListProducts();
   },
   updated() {
-    this.getLengthListProducts()
+    this.getLengthListProducts();
   },
   methods: {
     handleCurrentChange(val) {
       this.$router.push(`/products/${val.id}`);
-      this.currentRow = val.id; 
+      this.currentRow = val.id;
     },
-    getLengthListProducts(){
-      this.listLength = Array.from(document.getElementsByClassName('el-table__row')).length
-    },
+    getLengthListProducts() {
+      this.listLength = Array.from(
+        document.getElementsByClassName("el-table__row")
+      ).length;
+    }
   },
   computed: {
     ...mapGetters(["products"]),
-    productLetter() {       
+    productLetter() {
       let str;
-      if (this.listLength == 1){
-         str = ' продукт'
+      if (this.listLength % 10 === 5) {
+        str = " продукт";
       }
-      if (this.listLength > 1 && this.listLength <= 4){
-         str = ' продукта'
+      if (this.listLength % 100 < 20 && this.listLength % 100 > 4) {
+        str = " продукта";
       }
-      if (this.listLength >= 5){
-         str = ' продуктов'
+      if (this.listLength % 10 < 5) {
+        str = " продуктов";
       }
-       return str
+      return str;
     }
   }
 };

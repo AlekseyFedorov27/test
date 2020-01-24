@@ -22,6 +22,13 @@ export default new Router({
       name: 'product',
       props: true,
       component: Product
+    },
+    {
+      path: '*', //'/index.html',
+      beforeEnter: (to, from, next) => 
+      {
+        next('/')
+      }
     }
   ]
 })
