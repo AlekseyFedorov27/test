@@ -90,13 +90,13 @@ export default {
     ...mapGetters(["products"]),
     productLetter() {
       let str;
-      if (this.listLength % 10 === 5) {
+      if (this.listLength == 1) {
         str = " продукт";
       }
-      if (this.listLength % 100 < 20 && this.listLength % 100 > 4) {
+      if (this.listLength > 1 && this.listLength <= 4) {
         str = " продукта";
       }
-      if (this.listLength % 10 < 5) {
+      if (this.listLength >= 5) {
         str = " продуктов";
       }
       return str;

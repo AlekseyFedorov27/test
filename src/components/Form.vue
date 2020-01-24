@@ -7,10 +7,10 @@
       @change="filterList"
     >
       <el-option
-        v-for="item in products"
+        v-for="item in filterBrand"
         :key="item.id"
-        :label="item.brand"
-        :value="item.brand"
+        :label="item"
+        :value="item"
       >
       </el-option>
     </el-select>
@@ -21,21 +21,24 @@
       @change="filterList"
     >
       <el-option
-        v-for="item in products"
+        v-for="item in filterCategory"
         :key="item.id"
-        :label="item.category"
-        :value="item.category"
+        :label="item"
+        :value="item"
       >
       </el-option>
     </el-select>
 
-    <el-button size="small" @click="clearFilter">Clear filter</el-button>
+    <el-button
+      size="small"
+      @click="clearFilter"
+    >Clear filter</el-button>
   </ElCard>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import {eventBus} from '../main'
+import { eventBus } from "../main";
 export default {
   name: "Form",
   data() {
@@ -46,18 +49,34 @@ export default {
   },
   computed: {
     ...mapGetters(["products"]),
+    filterBrand() {
+      let result = [];
+      this.products.map(str => {
+        if (!result.includes(str.brand)) {
+          result.push(str.brand);
+        }
+      });
+      return result;
+    },
+    filterCategory() {
+      let result = [];
+      this.products.map(str => {
+        if (!result.includes(str.category)) {
+          result.push(str.category);
+        }
+      });
+      return result;
+    }
   },
   methods: {
-    clearFilter(){
-      this.brand=""
-      this.category=""
-      this.filterList()
+    clearFilter() {
+      this.brand = "";
+      this.category = "";
+      this.filterList();
     },
-    filterList(){
-      
-      const payload={brand:this.brand, category:this.category}
-      eventBus.$emit('setFilter', payload)
-      
+    filterList() {
+      const payload = { brand: this.brand, category: this.category };
+      eventBus.$emit("setFilter", payload);
     }
   }
 };
